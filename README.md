@@ -42,7 +42,7 @@ Kết quả hiển thị `Tesla T4` là thành công.
 ### Bước 3 — Clone repo về Colab
 
 ```python
-!git clone https://github.com/<your-username>/clip-zero-shot-classifier-api.git
+!git clone https://github.com/iwyyTh/clip-zero-shot-classifier-api.git
 %cd clip-zero-shot-classifier-api
 ```
 
