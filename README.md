@@ -18,7 +18,7 @@ Dự án xây dựng hệ thống **phân loại ảnh zero-shot** sử dụng m
 Mở terminal trên máy tính và chạy:
 
 ```bash
-git clone https://github.com/<your-username>/clip-zero-shot-classifier-api.git
+git clone https://github.com/iwyyTh/clip-zero-shot-classifier-api.git
 ```
 
 ---
