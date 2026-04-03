@@ -13,90 +13,46 @@ Dự án xây dựng hệ thống **phân loại ảnh zero-shot** sử dụng m
 
 ## Chạy trên Google Colab
 
-### Bước 1 — Mở Google Colab và tạo notebook mới
+### Bước 1 — Clone repo về máy
 
-Truy cập [https://colab.research.google.com](https://colab.research.google.com) → **New notebook**.
+Mở terminal trên máy tính và chạy:
+
+```bash
+git clone https://github.com/<your-username>/clip-zero-shot-classifier-api.git
+```
 
 ---
 
 ### Bước 2 — Cấu hình GPU T4
 
-> ⚠️ Làm bước này **trước tiên**, trước khi chạy bất kỳ cell nào.
+> ⚠️ Làm bước này **trước khi chạy bất kỳ cell nào**.
 
-1. Trên thanh menu chọn **Runtime → Change runtime type**
-2. Mục **Hardware accelerator** chọn **GPU**
-3. Mục **GPU type** chọn **T4**
-4. Nhấn **Save**
-
-Kiểm tra GPU bằng cách chạy cell:
-
-```python
-!nvidia-smi
-```
-
-Kết quả hiển thị `Tesla T4` là thành công.
-
-> 💡 Lệnh có dấu `!` phía trước chỉ chạy được trong **cell của notebook**, không chạy trong Terminal.
+1. Truy cập [https://colab.research.google.com](https://colab.research.google.com)
+2. Chọn **Runtime → Change runtime type**
+3. Mục **Hardware accelerator** chọn **GPU**
+4. Mục **GPU type** chọn **T4**
+5. Nhấn **Save**
 
 ---
 
-### Bước 3 — Clone repo và cài thư viện
+### Bước 3 — Mở notebook
 
-Chạy lần lượt từng cell dưới đây:
-
-```python
-# Clone repo về Colab
-!git clone https://github.com/iwyyTh/clip-zero-shot-classifier-api.git
-```
-
-```python
-# Di chuyển vào thư mục repo
-%cd /content/clip-zero-shot-classifier-api
-```
-
-```python
-# Cài đặt thư viện
-!pip install -r requirements.txt
-```
-
-> Nếu Colab hiện thông báo **"Restart runtime"** sau khi cài xong, nhấn **OK** rồi chạy lại 2 cell cuối (`%cd` và `!pip install`).
+1. Trong Colab, chọn **File → Open notebook → Upload**
+2. Upload file `Zero_shot_CLIP.ipynb` từ thư mục vừa clone về máy
 
 ---
 
-### Bước 4 — Mở file notebook để chạy
+### Bước 4 — Chạy notebook
 
-Mở file notebook như sau:
+Chạy tuần tự từng cell từ trên xuống bằng **Shift + Enter**.
 
-1. Vào menu **File → Open notebook**
-2. Chọn tab **Google Drive** hoặc **Upload**
-3. Tìm và mở file `Zero_shot_CLIP.ipynb`
-
-Hoặc chạy cell này để mở trực tiếp:
+Cell đầu tiên sẽ tự động cài toàn bộ thư viện cần thiết:
 
 ```python
-import subprocess
-subprocess.Popen(["jupyter", "notebook", "Zero_shot_CLIP.ipynb"])
+!pip install fastapi nest-asyncio uvicorn transformers torch Pillow requests omegaconf
 ```
 
----
-
-### Bước 5 — Tạo file cấu hình
-
-Trong notebook, chạy cell:
-
-```python
-yaml_config = """
-model_path: "openai/clip-vit-large-patch14"
-"""
-with open("config.yaml", "w", encoding="utf-8") as f:
-    f.write(yaml_config)
-```
-
----
-
-### Bước 6 — Chạy các cell
-
-Chạy tuần tự từng cell từ trên xuống bằng **Shift + Enter** hoặc nhấn nút **▶** ở đầu mỗi cell.
+> 💡 Nếu Colab yêu cầu **Restart runtime** sau khi cài xong, nhấn **OK** rồi chạy lại từ cell đầu tiên.
 
 ---
 
