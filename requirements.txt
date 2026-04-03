@@ -1,0 +1,8 @@
+fastapi
+nest-asyncio
+uvicorn
+transformers
+torch
+Pillow
+requests
+omegaconf
