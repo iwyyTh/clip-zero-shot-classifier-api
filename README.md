@@ -1,10 +1,10 @@
-# 🔍 Zero-shot CLIP Classifier
+# Zero-shot CLIP Classifier
 
 Phân loại ảnh không cần training, sử dụng mô hình **OpenAI CLIP** chạy trên Google Colab và giao diện desktop local (`App.py`).
 
 ---
 
-## 📁 Cấu trúc dự án
+## Cấu trúc dự án
 
 ```
 CLIP-ZERO-SHOT-CLASSIFIER-API/
@@ -17,7 +17,7 @@ CLIP-ZERO-SHOT-CLASSIFIER-API/
 
 ---
 
-## 🚀 Hướng dẫn sử dụng
+## Hướng dẫn sử dụng
 
 ### Bước 1 — Chạy notebook trên Google Colab
 
@@ -53,17 +53,17 @@ python App.py
 
 ### Bước 3 — Sử dụng giao diện
 
-#### 🌐 Nhập Pinggy URL và kiểm tra kết nối
+#### Nhập Pinggy URL và kiểm tra kết nối
 
 - Dán URL Pinggy (bao gồm `/predict`) vào ô **Colab API URL**
 - Nhấn **Test** → thông báo ✅ nghĩa là kết nối thành công
 
-#### 🖼️ Xem trước ảnh
+#### Xem trước ảnh
 
 - Dán URL ảnh vào ô **URL Ảnh**
 - Nhấn **Preview** để xem trước ảnh trong giao diện
 
-#### ⚡ Phân loại
+#### Phân loại
 
 - Chọn số lượng nhãn **Top-K** muốn hiển thị
 - Nhấn **Phân loại ngay** để gửi ảnh đến API và nhận kết quả
