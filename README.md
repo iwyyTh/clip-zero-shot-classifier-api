@@ -1,104 +1,89 @@
-# clip-zero-shot-classifier-api
+# 🔍 Zero-shot CLIP Classifier
 
-Dự án xây dựng hệ thống **phân loại ảnh zero-shot** sử dụng mô hình [CLIP](https://huggingface.co/openai/clip-vit-large-patch14) của OpenAI, được đóng gói thành REST API bằng **FastAPI**.
-
-## Tính năng
-
-- Phân loại ảnh theo nhãn tùy chỉnh mà **không cần training lại** (zero-shot)
-- Hỗ trợ nhận ảnh qua URL
-- Trả về top-k nhãn kèm độ tin cậy
-- API async, không block event loop khi tải ảnh
+Phân loại ảnh không cần training, sử dụng mô hình **OpenAI CLIP** chạy trên Google Colab và giao diện desktop local (`App.py`).
 
 ---
 
-## Chạy trên Google Colab
+## 📁 Cấu trúc dự án
 
-### Bước 1 — Clone repo về máy
+```
+CLIP-ZERO-SHOT-CLASSIFIER-API/
+├── venv/
+├── App.py                  # Giao diện desktop (chạy local)
+├── README.md
+├── requirements.txt
+└── Zero_shot_CLIP.ipynb    # Mô hình + API (chạy trên Colab)
+```
 
-Mở terminal trên máy tính và chạy:
+---
+
+## 🚀 Hướng dẫn sử dụng
+
+### Bước 1 — Chạy notebook trên Google Colab
+
+1. Mở file `Zero_shot_CLIP.ipynb` trên [Google Colab](https://colab.research.google.com)
+2. Chọn Runtime **GPU (T4)**: `Runtime > Change runtime type > T4 GPU`
+3. Chạy lần lượt các cell từ đầu đến cell **"Get Pinggy URL"**:
+
+   | Cell               | Mô tả                                  |
+   | ------------------ | -------------------------------------- |
+   | Install Libraries  | Cài các thư viện cần thiết             |
+   | Create Config File | Tạo file cấu hình model                |
+   | Build Model        | Định nghĩa class `ZeroShotClassifier`  |
+   | Initialize Model   | Load mô hình CLIP                      |
+   | Initialize API     | Khởi động FastAPI server tại cổng 8000 |
+   | **Get Pinggy URL** | Tạo public URL để truy cập từ ngoài    |
+
+4. Sau khi chạy cell **Get Pinggy URL**, console sẽ in ra một URL dạng:
+   ```
+   https://xxxx-xxxx.pinggy.link/predict
+   ```
+   > 💡 Có thể chạy tiếp các cell **Call Local API** và **Call Public API** để kiểm tra API hoạt động đúng trên Colab.
+
+---
+
+### Bước 2 — Cài đặt và chạy App.py (local)
 
 ```bash
-git clone https://github.com/iwyyTh/clip-zero-shot-classifier-api.git
+pip install -r requirements.txt
+python App.py
 ```
 
 ---
 
-### Bước 2 — Cấu hình GPU T4
+### Bước 3 — Sử dụng giao diện
 
-> ⚠️ Làm bước này **trước khi chạy bất kỳ cell nào**.
+#### 🌐 Nhập Pinggy URL và kiểm tra kết nối
 
-1. Truy cập [https://colab.research.google.com](https://colab.research.google.com)
-2. Chọn **Runtime → Change runtime type**
-3. Mục **Hardware accelerator** chọn **GPU**
-4. Mục **GPU type** chọn **T4**
-5. Nhấn **Save**
+- Dán URL Pinggy (bao gồm `/predict`) vào ô **Colab API URL**
+- Nhấn **Test** → thông báo ✅ nghĩa là kết nối thành công
 
----
+#### 🖼️ Xem trước ảnh
 
-### Bước 3 — Mở notebook
+- Dán URL ảnh vào ô **URL Ảnh**
+- Nhấn **Preview** để xem trước ảnh trong giao diện
 
-1. Trong Colab, chọn **File → Open notebook → Upload**
-2. Upload file `Zero_shot_CLIP.ipynb` từ thư mục vừa clone về máy
+#### ⚡ Phân loại
 
----
+- Chọn số lượng nhãn **Top-K** muốn hiển thị
+- Nhấn **Phân loại ngay** để gửi ảnh đến API và nhận kết quả
 
-### Bước 4 — Chạy notebook
-
-Chạy tuần tự từng cell từ trên xuống bằng **Shift + Enter**.
-
-Cell đầu tiên sẽ tự động cài toàn bộ thư viện cần thiết:
-
-```python
-!pip install fastapi nest-asyncio uvicorn transformers torch Pillow requests omegaconf
-```
-
-> 💡 Nếu Colab yêu cầu **Restart runtime** sau khi cài xong, nhấn **OK** rồi chạy lại từ cell đầu tiên.
+Kết quả trả về gồm nhãn và độ chính xác (%), hiển thị dưới dạng thanh bar trực quan.
 
 ---
 
-## Cấu trúc project
+## 🏷️ Nhãn phân loại
 
-```
-clip-zero-shot-classifier-api/
-├── config.yaml              # Cấu hình đường dẫn model
-├── Zero_shot_CLIP.ipynb     # Notebook chính
-├── requirements.txt         # Danh sách thư viện
-└── README.md
-```
+Mô hình hiện hỗ trợ 3 nhãn:
+
+- `a photo of cat`
+- `a photo of dog`
+- `a photo of chicken`
 
 ---
 
-## Thư viện sử dụng
+## ⚠️ Lưu ý
 
-| Thư viện       | Mục đích                           |
-| -------------- | ---------------------------------- |
-| `transformers` | Load mô hình CLIP                  |
-| `fastapi`      | REST API framework                 |
-| `uvicorn`      | ASGI server                        |
-| `nest-asyncio` | Cho phép chạy async trong notebook |
-| `Pillow`       | Xử lý ảnh                          |
-| `requests`     | Tải ảnh từ URL                     |
-| `omegaconf`    | Đọc file cấu hình YAML             |
-| `torch`        | Backend deep learning              |
-
----
-
-## Nhãn mặc định
-
-```python
-labels = [
-    "a photo of cat",
-    "a photo of dog",
-    "a photo of chicken",
-]
-```
-
-Có thể tuỳ chỉnh danh sách nhãn trong class `ZeroShotClassifier`.
-
----
-
-## Tham khảo
-
-- [CLIP Paper](https://arxiv.org/abs/2103.00020)
-- [HuggingFace CLIP](https://huggingface.co/openai/clip-vit-large-patch14)
-- [FastAPI Docs](https://fastapi.tiangolo.com)
+- Colab session sẽ **timeout sau ~12 giờ** không hoạt động — cần chạy lại notebook và lấy URL mới.
+- Pinggy URL **thay đổi mỗi lần** khởi động lại tunnel.
+- `tkinter` là thư viện built-in của Python, **không cần cài thêm**.

@@ -1,8 +1,14 @@
-fastapi
-nest-asyncio
-uvicorn
+# CLIP / AI (Colab/server)
 transformers
 torch
-Pillow
-requests
+torchvision
 omegaconf
+ 
+# API server (Colab)
+fastapi
+uvicorn[standard]
+nest-asyncio
+ 
+# HTTP & image utilities
+requests
+Pillow
