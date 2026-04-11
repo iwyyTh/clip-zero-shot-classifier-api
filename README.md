@@ -87,3 +87,10 @@ Mô hình hiện hỗ trợ 3 nhãn:
 - Colab session sẽ **timeout sau ~12 giờ** không hoạt động — cần chạy lại notebook và lấy URL mới.
 - Pinggy URL **thay đổi mỗi lần** khởi động lại tunnel.
 - `tkinter` là thư viện built-in của Python, **không cần cài thêm**.
+
+## VIDEO DEMO
+
+
+https://github.com/user-attachments/assets/6f2665c1-4db8-4e52-b678-38c9b2347893
+
+
