@@ -91,5 +91,3 @@ Mô hình hiện hỗ trợ 3 nhãn:
 ## Video Demo
 
 https://github.com/user-attachments/assets/0dbd2602-c0bf-4f68-9d80-37a3d0bbbcdd
-
-
