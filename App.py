@@ -36,6 +36,7 @@ class CLIPDemoApp:
         self.root.title("Zero-shot CLIP Classifier")
         self.root.geometry("750x650")
         self.root.resizable(True, True)
+        self.root.state('zoomed')
         self.root.configure(bg="#1e1e2e")
 
         self.api_url = tk.StringVar(value=DEFAULT_API_URL)
@@ -275,6 +276,13 @@ class CLIPDemoApp:
 
 
 if __name__ == "__main__":
+
+    import ctypes
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(1)
+    except Exception:
+        pass
+
     root = tk.Tk()
     app = CLIPDemoApp(root)
     root.mainloop()
