@@ -33,7 +33,7 @@ class CLIPDemoApp:
 
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("🔍 Zero-shot CLIP Classifier")
+        self.root.title("Zero-shot CLIP Classifier")
         self.root.geometry("750x650")
         self.root.resizable(True, True)
         self.root.configure(bg="#1e1e2e")
@@ -70,7 +70,7 @@ class CLIPDemoApp:
                   font=("Segoe UI", 9, "bold"), padx=8).pack(side="left", padx=(5, 0))
 
         # Image URL
-        self._section(main, "🖼️ URL Ảnh")
+        self._section(main, "URL Ảnh")
         img_frame = tk.Frame(main, bg="#1e1e2e")
         img_frame.pack(fill="x", pady=(0, 8))
         tk.Entry(img_frame, textvariable=self.image_url,
@@ -98,7 +98,7 @@ class CLIPDemoApp:
         right = tk.Frame(row, bg="#1e1e2e", width=100)
         right.pack(side="right")
         right.pack_propagate(False)
-        self._section(right, "🔢 Top-K")
+        self._section(right, "Top-K")
         tk.Spinbox(right, from_=1, to=len(self.LABELS), textvariable=self.k_value,
                    font=("Segoe UI", 12, "bold"), width=5,
                    bg="#313244", fg="#cdd6f4", buttonbackground="#45475a",
@@ -111,12 +111,12 @@ class CLIPDemoApp:
         self.preview_label.pack(fill="x", ipady=60, pady=(0, 8))
 
         # Predict button
-        tk.Button(main, text="⚡  Phân loại ngay", command=self._run_predict,
+        tk.Button(main, text="Phân loại ngay", command=self._run_predict,
                   bg="#cba6f7", fg="#1e1e2e", font=("Segoe UI", 13, "bold"),
                   relief="flat", pady=8, cursor="hand2").pack(fill="x", pady=(0, 10))
 
         # Results
-        self._section(main, "📊 Kết quả")
+        self._section(main, "Kết quả")
         self.result_frame = tk.Frame(main, bg="#1e1e2e")
         self.result_frame.pack(fill="x")
 
@@ -146,7 +146,7 @@ class CLIPDemoApp:
         # 3. Gắn đuôi /health để test
         health_url = base_url + "/health"
 
-        self._set_status("⏳ Đang kiểm tra kết nối...")
+        self._set_status("Đang kiểm tra kết nối...")
 
         def _check():
             try:
@@ -154,15 +154,15 @@ class CLIPDemoApp:
                 resp = requests.get(health_url, timeout=10)
                 if resp.status_code == 200:
                     self.root.after(0, lambda: self._set_status(
-                        "✅ Kết nối thành công!", "#a6e3a1"))
+                        "Kết nối thành công!", "#a6e3a1"))
                     self.root.after(0, lambda: messagebox.showinfo(
                         "Kết nối OK", f"API hoạt động tốt!\nĐã gọi tới: {health_url}"))
                 else:
                     self.root.after(0, lambda: self._set_status(
-                        f"⚠️ HTTP {resp.status_code}", "#fab387"))
+                        f"HTTP {resp.status_code}", "#fab387"))
             except Exception as e:
                 self.root.after(0, lambda: self._set_status(
-                    "❌ Không kết nối được", "#f38ba8"))
+                    "Không kết nối được", "#f38ba8"))
                 self.root.after(0, lambda: messagebox.showerror(
                     "Lỗi kết nối", f"Đang cố gọi: {health_url}\nLỗi chi tiết: {str(e)}"))
 
@@ -173,7 +173,7 @@ class CLIPDemoApp:
         if not url:
             messagebox.showwarning("Thiếu URL", "Vui lòng nhập URL ảnh!")
             return
-        self._set_status("⏳ Đang tải ảnh xem trước...")
+        self._set_status("Đang tải ảnh xem trước...")
 
         def _load():
             try:
@@ -183,10 +183,10 @@ class CLIPDemoApp:
                 img.thumbnail((500, 200))
                 photo = ImageTk.PhotoImage(img)
                 self.root.after(0, lambda: self._update_preview(photo))
-                self.root.after(0, lambda: self._set_status("✅ Ảnh tải xong"))
+                self.root.after(0, lambda: self._set_status("Ảnh tải xong"))
             except Exception as e:
                 self.root.after(0, lambda: self._set_status(
-                    "❌ Lỗi tải ảnh", "#f38ba8"))
+                    "Lỗi tải ảnh", "#f38ba8"))
                 self.root.after(
                     0, lambda: messagebox.showerror("Lỗi ảnh", str(e)))
         threading.Thread(target=_load, daemon=True).start()
@@ -208,7 +208,7 @@ class CLIPDemoApp:
             messagebox.showwarning("Thiếu URL", "Vui lòng nhập URL ảnh!")
             return
 
-        self._set_status("⏳ Đang phân loại... (có thể mất vài giây)")
+        self._set_status("Đang phân loại... (có thể mất vài giây)")
         self._clear_results()
 
         def _call():
@@ -222,15 +222,15 @@ class CLIPDemoApp:
                     data, list) else data.get("results", [])
                 self.root.after(0, lambda: self._show_results(results))
                 self.root.after(0, lambda: self._set_status(
-                    "✅ Phân loại thành công!", "#a6e3a1"))
+                    "Phân loại thành công!", "#a6e3a1"))
             except requests.exceptions.Timeout:
                 self.root.after(0, lambda: self._set_status(
-                    "❌ Timeout", "#f38ba8"))
+                    "Timeout", "#f38ba8"))
                 self.root.after(0, lambda: messagebox.showerror(
                     "Timeout", "API không phản hồi trong 120 giây."))
             except Exception as e:
                 self.root.after(0, lambda: self._set_status(
-                    f"❌ Lỗi: {e}", "#f38ba8"))
+                    f"Lỗi: {e}", "#f38ba8"))
                 self.root.after(0, lambda: messagebox.showerror("Lỗi", str(e)))
 
         threading.Thread(target=_call, daemon=True).start()
